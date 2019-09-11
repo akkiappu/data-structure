@@ -1,4 +1,6 @@
-package linkedlist;
+package linkedlist.singly;
+
+import linkedlist.List;
 
 import java.util.NoSuchElementException;
 
@@ -106,23 +108,15 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public E get(int index) {
-        checkIndexPosition(index, size - 1);
-        if (index == size - 1) {
-            return last.item;
-        } else if (index == 0) {
-            return first.item;
-        } else {
-            Node<E> temp = first.next;
-            for (int i = 1; i < index; i++) {
-                temp = temp.next;
-            }
-            return temp.item;
-        }
+        return getIndexNode(index).item;
     }
 
     @Override
     public E set(int index, E element) {
-        return null;
+        Node<E> node = getIndexNode(index);
+        E e = node.item;
+        node.item = element;
+        return e;
     }
 
     private void addLast(E element) {
@@ -174,8 +168,23 @@ public class SinglyLinkedList<E> implements List<E> {
         E e = current.item;
         current.item = null;
         current = null;
-
+        size--;
         return e;
+    }
+
+    private Node<E> getIndexNode(int index){
+        checkIndexPosition(index, size - 1);
+        if (index == size - 1) {
+            return last;
+        } else if (index == 0) {
+            return first;
+        } else {
+            Node<E> temp = first.next;
+            for (int i = 1; i < index; i++) {
+                temp = temp.next;
+            }
+            return temp;
+        }
     }
 
 }
