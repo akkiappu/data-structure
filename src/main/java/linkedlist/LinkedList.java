@@ -1,6 +1,6 @@
 package linkedlist;
 
-public interface List<E> {
+public interface LinkedList<E> {
 
     void add(E element);
 
@@ -23,4 +23,5 @@ public interface List<E> {
     E get(int index);
 
     E set(int index, E element);
+
 }

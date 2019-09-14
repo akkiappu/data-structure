@@ -1,10 +1,10 @@
-package linkedlist.singly;
+package linkedlist.impl;
 
-import linkedlist.List;
+import linkedlist.LinkedList;
 
 import java.util.NoSuchElementException;
 
-public class SinglyLinkedList<E> implements List<E> {
+public class SinglyLinkedList<E> implements LinkedList<E> {
 
     private transient Node<E> first;
     private transient Node<E> last;
@@ -59,7 +59,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public void clear() {
-        if(first == last){
+        if (first == last) {
             first.item = null;
             first = null;
             last = null;
@@ -67,7 +67,7 @@ public class SinglyLinkedList<E> implements List<E> {
         }
         Node<E> prev = first;
         Node<E> current = first.next;
-        while(current != null){
+        while (current != null) {
             first.item = null;
             first.next = null;
             prev = current;
@@ -119,6 +119,31 @@ public class SinglyLinkedList<E> implements List<E> {
         return e;
     }
 
+
+    public void reverse() {
+        Node<E> prev = first;
+        Node<E> current = first.next;
+
+        while (current != null) {
+            Node<E> temp = current.next;
+            current.next = prev;
+            prev = current;
+            current = temp;
+        }
+        first.next = null;
+        first = prev;
+    }
+
+    public Node<E> reverseRecursive(Node<E> node) {
+        if (node.next == null) {
+            return first = node;
+        }
+        Node<E> result = reverseRecursive(node.next);
+        result.next = node;
+        node.next = null;
+        return node;
+    }
+
     private void addLast(E element) {
         if (first == null) {
             addFirst(element);
@@ -144,7 +169,7 @@ public class SinglyLinkedList<E> implements List<E> {
         first = first.next;
         E e = unlinkNode.item;
         unlinkNode.item = null;
-        if(unlinkNode == last){
+        if (unlinkNode == last) {
             last = null;
         }
         unlinkNode = null;
@@ -153,13 +178,13 @@ public class SinglyLinkedList<E> implements List<E> {
     }
 
     private E unlinkLast() {
-        if(first == last){
+        if (first == last) {
             return unlinkFirst();
         }
         Node<E> prev = first;
         Node<E> current = first.next;
 
-        while(current.next != null){
+        while (current.next != null) {
             prev = current;
             current = current.next;
         }
@@ -172,7 +197,7 @@ public class SinglyLinkedList<E> implements List<E> {
         return e;
     }
 
-    private Node<E> getIndexNode(int index){
+    private Node<E> getIndexNode(int index) {
         checkIndexPosition(index, size - 1);
         if (index == size - 1) {
             return last;
